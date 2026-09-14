@@ -9,7 +9,9 @@ const schema = z.object({
  SMTP_URL:z.string().optional(), MAIL_FROM:z.email().optional(), SENTRY_DSN:z.url().optional()
 });
 export function parseEnv(input:Record<string,string|undefined>) {
- const value=schema.parse(input);
+ const normalized={...input};
+ for(const key of ['PAYMENT_WEBHOOK_SECRET','STRIPE_SECRET_KEY','SMTP_URL','MAIL_FROM','SENTRY_DSN'])if(normalized[key]==='')delete normalized[key];
+ const value=schema.parse(normalized);
  if(['production','staging'].includes(value.NODE_ENV) && (value.COOKIE_SECURE!=='true' || value.ALLOWED_ORIGINS.split(',').some(o=>!o.startsWith('https://')) || /example|development|change.me/i.test(value.JWT_SECRET))) throw new Error('Production requires HTTPS origins, secure cookies and a unique secret');
  return value;
 }

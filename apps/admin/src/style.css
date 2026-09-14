@@ -1,0 +1,174 @@
+* {
+  box-sizing: border-box;
+}
+body {
+  margin: 0;
+  background: #f5f6f8;
+  color: #172c27;
+  font:
+    15px system-ui,
+    sans-serif;
+}
+button,
+input,
+textarea {
+  font: inherit;
+}
+button {
+  cursor: pointer;
+  border: 1px solid #cbd6d0;
+  border-radius: 8px;
+  padding: 10px 16px;
+  background: white;
+  color: #173c2c;
+}
+button:disabled {
+  opacity: 0.55;
+  cursor: wait;
+}
+button:hover {
+  background: #e7f2ec;
+}
+input,
+textarea {
+  display: block;
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #b3bfb9;
+  border-radius: 6px;
+  margin: 6px 0 14px;
+}
+label {
+  text-transform: capitalize;
+}
+main {
+  padding: 36px;
+  min-width: 0;
+  max-width: 1400px;
+  width: 100%;
+}
+.login {
+  max-width: 420px;
+  margin: 10vh auto;
+}
+.shell {
+  display: flex;
+  min-height: 100vh;
+}
+aside {
+  background: #143c2e;
+  color: #fff;
+  width: 230px;
+  flex-shrink: 0;
+  padding: 24px;
+}
+aside span {
+  font-size: 14px;
+  font-weight: 400;
+}
+nav {
+  display: grid;
+  gap: 4px;
+}
+nav button {
+  background: transparent;
+  border: 0;
+  color: #d8e7df;
+  text-align: left;
+  text-transform: capitalize;
+}
+nav button.selected,
+nav button:hover {
+  background: #2d5845;
+  color: white;
+}
+header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 28px;
+}
+h1 {
+  font-size: 32px;
+  margin: 8px 0;
+}
+h3 {
+  margin-top: 0;
+}
+.eyebrow {
+  font-size: 11px;
+  letter-spacing: 2px;
+  color: #587062;
+}
+article {
+  padding: 22px;
+  background: white;
+  border: 1px solid #e0e6e2;
+  border-radius: 12px;
+  margin-bottom: 14px;
+}
+.metrics {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+}
+.metrics strong {
+  font-size: 26px;
+}
+.metrics p {
+  color: #61736a;
+}
+pre {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  font-size: 12px;
+  max-height: 240px;
+  overflow: auto;
+}
+.error {
+  background: #fee9e7;
+  color: #972e26;
+  padding: 14px;
+  border-radius: 8px;
+}
+.product-form {
+  max-width: 600px;
+  padding: 20px 0;
+}
+.records form {
+  display: flex;
+  align-items: end;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.records form button {
+  margin-bottom: 14px;
+}
+details {
+  margin-bottom: 24px;
+}
+summary {
+  cursor: pointer;
+  font-weight: 600;
+}
+@media (max-width: 760px) {
+  .shell {
+    display: block;
+  }
+  aside {
+    width: 100%;
+  }
+  nav {
+    display: flex;
+    overflow-x: auto;
+  }
+  nav button {
+    white-space: nowrap;
+  }
+  main {
+    padding: 20px;
+  }
+  .metrics {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}

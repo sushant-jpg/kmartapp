@@ -21,3 +21,9 @@ This repository follows the twelve phases in the supplied KMart AI brief. A feat
 ## Release evidence
 
 Updated as implementation and verification proceed. Do not interpret this initial ledger as a production certification.
+
+## Restored missing implementation
+
+The admin and mobile workspaces previously contained only package manifests. They now include application entry points, TypeScript configuration, authenticated API clients and screens for the existing catalog/commerce/admin contracts. The previously missing development seed entry point now creates sample catalog records and an explicitly configured administrator without overwriting existing data.
+
+The worker now runs order expiration and processes durable order-notification events into in-app notifications with transactional, idempotent completion. Unsupported outbox kinds remain pending. See the README for setup and remaining integration work; the original twelve-phase brief was unavailable during this repair.
