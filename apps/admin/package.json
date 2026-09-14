@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "vite --host 0.0.0.0",
     "typecheck": "tsc --noEmit",
-    "build": "vite build"
+    "build": "vite build",
+    "start": "vite preview --host 0.0.0.0"
   },
   "dependencies": {
     "@kmart/shared": "*",

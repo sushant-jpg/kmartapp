@@ -9,7 +9,10 @@
     "build": "tsup",
     "typecheck": "tsc --noEmit",
     "test": "vitest run",
-    "seed": "tsx --env-file-if-exists=../../.env src/seed.ts"
+    "seed": "tsx --env-file-if-exists=../../.env src/seed.ts",
+    "start": "node --env-file-if-exists=../../.env dist/server.js",
+    "dev:worker": "tsx watch --env-file-if-exists=../../.env src/worker.ts",
+    "start:worker": "node --env-file-if-exists=../../.env dist/worker.js"
   },
   "dependencies": {
     "@kmart/shared": "*",

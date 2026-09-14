@@ -1,7 +1,22 @@
 import { Platform } from "react-native";
+import Constants from "expo-constants";
 import * as SecureStore from "expo-secure-store";
 import type { ApiResult, AuthResult } from "@kmart/shared";
-const base = process.env.EXPO_PUBLIC_API_URL ?? "http://localhost:4000/api/v1";
+function defaultApiUrl() {
+  // In Expo Go, localhost is the phone itself. Use the Metro computer's host
+  // for native development; explicit URLs still support tunnels/custom ports.
+  const hostUri = Constants.expoConfig?.hostUri;
+  if (__DEV__ && Platform.OS !== "web" && hostUri) {
+    const url = new URL(`http://${hostUri}`);
+    url.port = "4000";
+    url.pathname = "/api/v1";
+    return url.toString();
+  }
+  return "http://localhost:4000/api/v1";
+}
+const base = (
+  process.env.EXPO_PUBLIC_API_URL?.trim() || defaultApiUrl()
+).replace(/\/+$/, "");
 let token = "";
 let webRefresh: string | undefined;
 let refreshing: Promise<AuthResult> | undefined;
