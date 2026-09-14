@@ -1,0 +1,2 @@
+import { defineConfig } from 'vitest/config';
+export default defineConfig({test:{fileParallelism:false,testTimeout:30000,hookTimeout:240000,env:{NODE_ENV:'test',MONGOMS_DOWNLOAD_IGNORE_MISSING_HEADER:'true',MONGO_URI:'mongodb://127.0.0.1:27017/kmart_test',REDIS_URL:'redis://127.0.0.1:16389',JWT_SECRET:'test-only-key-with-at-least-forty-eight-characters-123456789',ALLOWED_ORIGINS:'http://localhost:5173',LOG_LEVEL:'silent'}}});

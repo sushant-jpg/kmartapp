@@ -1,0 +1,10 @@
+import { Router } from 'express';
+import { z } from 'zod';
+import { objectId } from '@kmart/shared';
+import { authenticate } from '../../middleware/auth.js';
+import { rateLimit } from '../../middleware/rate-limit.js';
+import { chat,forgetConversations } from './service.js';
+export const aiRouter=Router();
+aiRouter.use(authenticate);
+aiRouter.post('/chat',rateLimit('ai',12,60000),async(req,res)=>{const data=z.object({message:z.string().trim().min(1).max(2000),conversationId:objectId.optional()}).strict().parse(req.body);res.json({success:true,data:await chat(req.auth!.userId,data.message,data.conversationId)});});
+aiRouter.delete('/conversations',async(req,res)=>{await forgetConversations(req.auth!.userId);res.json({success:true,data:{}});});

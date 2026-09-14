@@ -1,0 +1,10 @@
+import { Schema,model } from 'mongoose';
+const userSchema=new Schema({fullName:{type:String,required:true},username:{type:String,required:true,unique:true},email:{type:String,required:true,unique:true},phone:String,passwordHash:{type:String,required:true,select:false},avatar:String,role:{type:String,enum:['customer','admin'],default:'customer'},emailVerified:{type:Boolean,default:false},phoneVerified:{type:Boolean,default:false},status:{type:String,enum:['active','suspended'],default:'active'},preferences:{type:[String],default:[]}}, {timestamps:true});
+export const User=model('User',userSchema);
+const sessionSchema=new Schema({userId:{type:Schema.Types.ObjectId,required:true,index:true},familyId:{type:String,required:true,index:true},tokenHash:{type:String,required:true,select:false},usedAt:Date,revokedAt:Date,expiresAt:{type:Date,required:true},device:{type:String,maxlength:200}}, {timestamps:true});
+sessionSchema.index({expiresAt:1},{expireAfterSeconds:0});
+export const UserSession=model('UserSession',sessionSchema);
+const resetSchema=new Schema({userId:{type:Schema.Types.ObjectId,required:true},hash:{type:String,required:true,unique:true},expiresAt:{type:Date,required:true},usedAt:Date},{timestamps:true});
+resetSchema.index({expiresAt:1},{expireAfterSeconds:0});
+export const PasswordReset=model('PasswordReset',resetSchema);
+export const Outbox=model('Outbox',new Schema({kind:{type:String,required:true},key:{type:String,required:true,unique:true},payload:{type:Schema.Types.Mixed,required:true,select:false},processedAt:Date,attempts:{type:Number,default:0},lastError:String},{timestamps:true}));

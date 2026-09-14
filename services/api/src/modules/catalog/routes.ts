@@ -1,0 +1,13 @@
+import { Router } from 'express';
+import { z } from 'zod';
+import { objectId } from '@kmart/shared';
+import { productQuery } from './validation.js';
+import { listProducts,getProduct,autocomplete } from './service.js';
+import { Category,Brand } from './models.js';
+import { rateLimit } from '../../middleware/rate-limit.js';
+export const catalogRouter=Router();
+catalogRouter.get('/products',rateLimit('search',120),async(req,res)=>res.json({success:true,...await listProducts(productQuery.parse(req.query))}));
+catalogRouter.get('/products/autocomplete',rateLimit('search',120),async(req,res)=>res.json({success:true,data:await autocomplete(z.string().trim().min(2).max(50).parse(req.query.q))}));
+catalogRouter.get('/products/:id',async(req,res)=>res.json({success:true,data:await getProduct(objectId.parse(req.params.id))}));
+catalogRouter.get('/categories',async(_req,res)=>res.json({success:true,data:await Category.find({active:true}).sort({name:1}).limit(100).lean()}));
+catalogRouter.get('/brands',async(_req,res)=>res.json({success:true,data:await Brand.find({active:true}).sort({name:1}).limit(100).lean()}));

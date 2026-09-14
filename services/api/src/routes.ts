@@ -1,0 +1,15 @@
+import { app,finishRoutes } from './app.js';
+import { authRouter } from './modules/auth/routes.js';
+import { catalogRouter } from './modules/catalog/routes.js';
+import { commerceRouter } from './modules/commerce/routes.js';
+import { aiRouter } from './modules/ai/routes.js';
+import { engagementRouter } from './modules/engagement/routes.js';
+import { adminRouter } from './modules/admin/routes.js';
+app.use('/api/v1/auth',authRouter);
+app.use('/api/v1',catalogRouter);
+app.use('/api/v1/admin',adminRouter);
+app.use('/api/v1/ai',aiRouter);
+app.use('/api/v1',engagementRouter);
+app.use('/api/v1',commerceRouter);
+finishRoutes();
+export { app };

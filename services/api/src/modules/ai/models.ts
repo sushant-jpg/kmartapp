@@ -1,0 +1,4 @@
+import { Schema,model } from 'mongoose';
+const conversationSchema=new Schema({userId:{type:Schema.Types.ObjectId,required:true,index:true},state:{type:Schema.Types.Mixed,default:{}},lastProductIds:{type:[Schema.Types.ObjectId],default:[]},expiresAt:{type:Date,required:true},version:{type:Number,default:0}},{timestamps:true});conversationSchema.index({expiresAt:1},{expireAfterSeconds:0});
+export const Conversation=model('Conversation',conversationSchema);
+export const ChatMessage=model('ChatMessage',new Schema({conversationId:{type:Schema.Types.ObjectId,required:true,index:true},role:{type:String,enum:['user','assistant'],required:true},content:{type:String,maxlength:3000},productIds:[Schema.Types.ObjectId],expiresAt:{type:Date,required:true,index:{expireAfterSeconds:0}}},{timestamps:true}));

@@ -1,0 +1,30 @@
+{
+  "name": "@kmart/admin",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite --host 0.0.0.0",
+    "typecheck": "tsc --noEmit",
+    "build": "vite build"
+  },
+  "dependencies": {
+    "@kmart/shared": "*",
+    "react": "19.2.3",
+    "react-dom": "19.2.3",
+    "@tanstack/react-query": "^5.90.16",
+    "react-hook-form": "^7.71.1",
+    "@hookform/resolvers": "^5.2.2",
+    "recharts": "^3.6.0",
+    "lucide-react": "^0.562.0",
+    "zod": "^4.3.5"
+  },
+  "devDependencies": {
+    "vite": "^7.3.1",
+    "@vitejs/plugin-react": "^5.1.2",
+    "tailwindcss": "^4.1.18",
+    "@tailwindcss/vite": "^4.1.18",
+    "@types/react": "~19.2.2",
+    "@types/react-dom": "~19.2.3"
+  }
+}

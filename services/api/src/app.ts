@@ -1,0 +1,20 @@
+import express from 'express';
+import helmet from 'helmet';
+import cors from 'cors';
+import compression from 'compression';
+import cookieParser from 'cookie-parser';
+import { pinoHttp } from 'pino-http';
+import mongoose from 'mongoose';
+import { randomUUID } from 'node:crypto';
+import { env } from './config/env.js';
+import { logger } from './lib/logger.js';
+import { redis } from './lib/db.js';
+import { errorHandler } from './middleware/errors.js';
+export const app=express();
+app.disable('x-powered-by');
+app.use(helmet(),cors({origin:env.ALLOWED_ORIGINS.split(','),credentials:true}),compression(),cookieParser());
+app.use(pinoHttp({logger,genReqId:()=>randomUUID(),serializers:{req:r=>({id:r.id,method:r.method,url:String(r.url).split('?')[0]}),res:r=>({statusCode:r.statusCode})}}));
+app.use(express.json({limit:'64kb'}));
+app.get('/health',(_req,res)=>res.json({success:true,data:{status:'ok'}}));
+app.get('/ready',async(_req,res)=>{const mongo=mongoose.connection.readyState===1;let cache=false;try{cache=(await redis.ping())==='PONG';}catch{/* readiness must fail closed */}res.status(mongo&&cache?200:503).json({success:mongo&&cache,data:{mongo,redis:cache}});});
+export function finishRoutes(){app.use((_req,res)=>res.status(404).json({success:false,error:{code:'NOT_FOUND',message:'Route not found'}}));app.use(errorHandler);}
